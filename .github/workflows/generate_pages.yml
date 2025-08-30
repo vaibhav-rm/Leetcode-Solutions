@@ -31,6 +31,7 @@ jobs:
             lang=$(echo $filename | sed -n 's/.*\.//p')
 
             explanation="This is the explanation for **$title**. Add details here."
+            code="$(cat "$file")"
 
             cat > "_problems/${title}.md" <<EOL
 ---
@@ -44,7 +45,7 @@ $explanation
 
 ### Solution Code
 \`\`\`$lang
-$(cat "$file")
+$code
 \`\`\`
 EOL
           done
