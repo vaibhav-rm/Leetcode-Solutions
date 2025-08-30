@@ -29,26 +29,25 @@ jobs:
             [ -f "$file" ] || continue
             filename=$(basename "$file")
             title="${filename%.*}"
-            lang=$(echo $filename | sed -n 's/.*\.//p')
+            lang=$(echo "$filename" | sed -n 's/.*\.//p')
 
             explanation="This is the explanation for **$title**. Add details here."
             code="$(cat "$file")"
 
-            cat > "_problems/${title}.md" <<EOL
----
-layout: post
-title: "$title"
----
-
-## Problem: $title
-
-$explanation
-
-### Solution Code
-\`\`\`$lang
-$code
-\`\`\`
-EOL
+            printf '%s\n' \
+              '---' \
+              "layout: post" \
+              "title: \"$title\"" \
+              '---' \
+              '' \
+              "## Problem: $title" \
+              '' \
+              "$explanation" \
+              '' \
+              "### Solution Code" \
+              "\`\`\`$lang" \
+              "$code" \
+              "\`\`\`" > "_problems/${title}.md"
           done
 
       - name: Commit generated pages
