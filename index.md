@@ -7,7 +7,7 @@ description: "A collection of my LeetCode solutions with code in C, C++, Java, a
 # 🧩 My LeetCode Solutions
 
 Welcome! This site contains my personal solutions to [LeetCode](https://leetcode.com) problems.  
-Each solution is categorized by topic (e.g., Arrays, Strings) and linked directly to the source file.
+Each solution is categorized by topic (e.g., Arrays, Strings) and linked directly to the solution page.
 
 ---
 
@@ -22,11 +22,11 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 
 ### Arrays
 <ul>
-  {% assign array_files = site.static_files | where_exp: "f", "f.path contains '/arrays/'" %}
-  {% for file in array_files %}
+  {% assign array_pages = site.pages | where_exp: "p", "p.path contains 'arrays/' and p.path contains '.md'" %}
+  {% for page in array_pages %}
     <li>
-      <a href="{{ file.path | relative_url }}">
-        {{ file.name | replace: "_", " " | replace: ".cpp", "" | replace: ".c", "" | replace: ".py", "" | replace: ".java", "" }}
+      <a href="{{ page.url | relative_url }}">
+        {{ page.title | default: page.name | replace: "_", " " | replace: ".md", "" }}
       </a>
     </li>
   {% endfor %}
@@ -34,16 +34,15 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 
 ### Strings
 <ul>
-  {% assign string_files = site.static_files | where_exp: "f", "f.path contains '/strings/'" %}
-  {% for file in string_files %}
+  {% assign string_pages = site.pages | where_exp: "p", "p.path contains 'strings/' and p.path contains '.md'" %}
+  {% for page in string_pages %}
     <li>
-      <a href="{{ file.path | relative_url }}">
-        {{ file.name | replace: "_", " " | replace: ".cpp", "" | replace: ".c", "" | replace: ".py", "" | replace: ".java", "" }}
+      <a href="{{ page.url | relative_url }}">
+        {{ page.title | default: page.name | replace: "_", " " | replace: ".md", "" }}
       </a>
     </li>
   {% endfor %}
 </ul>
-
 
 ---
 
