@@ -23,9 +23,13 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 
 ## 📂 Problems
 
-{% for post in site.problems %}
-- [{{ post.title }}]({{ post.url }})
+<ul>
+{% for problem in site.problems %}
+  <li>
+    <a href="{{ problem.url | relative_url }}">{{ problem.title }}</a>
+  </li>
 {% endfor %}
+</ul>
 
 
 <!-- ### Arrays
