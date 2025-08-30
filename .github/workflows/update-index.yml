@@ -5,10 +5,10 @@ on:
     paths:
       - "arrays/**"
       - "strings/**"
-      - "**.cpp"
-      - "**.c"
-      - "**.py"
-      - "**.java"
+      - "**/*.cpp"
+      - "**/*.c"
+      - "**/*.py"
+      - "**/*.java"
 
 jobs:
   update:
@@ -26,10 +26,10 @@ jobs:
           updated=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
 
           cat > _data/leetcode_stats.yml <<EOL
-          total: $total
-          languages: [${langs}]
-          last_updated: "$updated"
-          EOL
+total: $total
+languages: [${langs}]
+last_updated: "$updated"
+EOL
 
       - name: Commit changes
         run: |
