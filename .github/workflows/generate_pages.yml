@@ -1,52 +1,36 @@
-name: Generate Problem Pages
+name: Update Problems Index
 
 on:
   push:
     paths:
-      - "**"
+      - "problems/**"
+  workflow_dispatch:
 
 jobs:
-  generate-pages:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Generate Markdown pages
+      - name: Generate Problems List
         run: |
           mkdir -p _problems
-          for file in arrays/* strings/*; do
-            [ -f "$file" ] || continue
-            filename=$(basename "$file")
-            title="${filename%.*}"
-            lang=$(echo "$filename" | sed -n 's/.*\.//p')
-
-            explanation="This is the explanation for **$title**. Add details here."
-
-            cat > "_problems/${title}.md" <<EOL
----
-layout: post
-title: "$title"
----
-
-## Problem: $title
-
-$explanation
-
-### Solution Code
-\`\`\`$lang
-$(cat "$file")
-\`\`\`
-EOL
+          echo "---" > _problems/index.md
+          echo "layout: page" >> _problems/index.md
+          echo "title: Problems" >> _problems/index.md
+          echo "---" >> _problems/index.md
+          echo "# Problems" >> _problems/index.md
+          echo "" >> _problems/index.md
+          for file in problems/*; do
+            fname=$(basename "$file")
+            echo "- [${fname}](/${file})" >> _problems/index.md
           done
 
-      - name: Commit generated pages
+      - name: Commit and Push changes
         run: |
-          git config user.name "github-actions"
-          git config user.email "actions@github.com"
-          git add _problems/
-          git commit -m "Auto-generate problem pages" || echo "No changes"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add _problems/index.md
+          git commit -m "Update problems index" || echo "No changes to commit"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
