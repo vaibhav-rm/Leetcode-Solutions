@@ -1,3 +1,7 @@
 title: "My LeetCode Solutions"
 description: "A collection of my LeetCode solutions organized by topic"
 theme: jekyll-theme-cayman
+collections:
+  posts:
+    output: true
+    permalink: /:title/

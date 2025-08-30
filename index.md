@@ -18,22 +18,14 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 
 ---
 
+
 ## 📂 Categories
 
-<ul>
-  {% assign array_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
-  {% for page in array_pages %}
-      <li>
-        <a href="{{ page.url | relative_url }}">
-          {% if page.title %}
-            {{ page.title }}
-          {% else %}
-            {{ page.name | remove: ".md" | replace: "-", " " | capitalize }}
-          {% endif %}
-        </a>
-      </li>
-  {% endfor %}
-</ul>
+## 📂 Problems
+
+{% for post in site.problems %}
+- [{{ post.title }}]({{ post.url }})
+{% endfor %}
 
 
 <!-- ### Arrays
