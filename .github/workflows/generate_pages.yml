@@ -3,7 +3,7 @@ name: Generate Problem Pages
 on:
   push:
     branches:
-      - main            # change to "master" if that's your default
+      - main    # change if your default branch is "master"
     paths:
       - "**"
 
@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
@@ -33,20 +33,20 @@ jobs:
             explanation="This is the explanation for **$title**. Add details here."
 
             cat > "_problems/${title}.md" <<EOL
-            ---
-            layout: post
-            title: "$title"
-            ---
+---
+layout: post
+title: "$title"
+---
 
-            ## Problem: $title
+## Problem: $title
 
-            $explanation
+$explanation
 
-            ### Solution Code
-            \`\`\`$lang
-            $(cat "$file")
-            \`\`\`
-            EOL
+### Solution Code
+\`\`\`$lang
+$(cat "$file")
+\`\`\`
+EOL
           done
 
       - name: Commit generated pages
