@@ -24,15 +24,13 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 <ul>
   {% assign array_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
   {% for page in array_pages %}
-    {% if page.title contains "Array" %}
       <li>
         <a href="{{ page.url | relative_url }}">{{ page.title }}</a>
       </li>
-    {% endif %}
   {% endfor %}
 </ul>
 
-### Strings
+<!-- ### Strings
 <ul>
   {% assign string_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
   {% for page in string_pages %}
@@ -42,7 +40,7 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
       </li>
     {% endif %}
   {% endfor %}
-</ul>
+</ul> -->
 
 ---
 
