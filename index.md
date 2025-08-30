@@ -22,25 +22,25 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 
 ### Arrays
 <ul>
-  {% assign array_pages = site.pages | where_exp: "p", "p.path contains 'arrays/' and p.path contains '.md'" %}
+  {% assign array_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
   {% for page in array_pages %}
-    <li>
-      <a href="{{ page.url | relative_url }}">
-        {{ page.title | default: page.name | replace: "_", " " | replace: ".md", "" }}
-      </a>
-    </li>
+    {% if page.title contains "Array" %}
+      <li>
+        <a href="{{ page.url | relative_url }}">{{ page.title }}</a>
+      </li>
+    {% endif %}
   {% endfor %}
 </ul>
 
 ### Strings
 <ul>
-  {% assign string_pages = site.pages | where_exp: "p", "p.path contains 'strings/' and p.path contains '.md'" %}
+  {% assign string_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
   {% for page in string_pages %}
-    <li>
-      <a href="{{ page.url | relative_url }}">
-        {{ page.title | default: page.name | replace: "_", " " | replace: ".md", "" }}
-      </a>
-    </li>
+    {% if page.title contains "String" %}
+      <li>
+        <a href="{{ page.url | relative_url }}">{{ page.title }}</a>
+      </li>
+    {% endif %}
   {% endfor %}
 </ul>
 
