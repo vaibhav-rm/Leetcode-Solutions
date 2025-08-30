@@ -20,26 +20,25 @@ jobs:
             [ -f "$file" ] || continue
             filename=$(basename "$file")
             title="${filename%.*}"
-            lang=$(echo $filename | sed -n 's/.*\.//p')
+            lang=$(echo "$filename" | sed -n 's/.*\.//p')
 
-            # Placeholder explanation (can later be auto-generated)
             explanation="This is the explanation for **$title**. Add details here."
 
             cat > "_problems/${title}.md" <<EOL
-            ---
-            layout: post
-            title: "$title"
-            ---
+---
+layout: post
+title: "$title"
+---
 
-            ## Problem: $title
+## Problem: $title
 
-            $explanation
+$explanation
 
-            ### Solution Code
-            \`\`\`$lang
-            $(cat "$file")
-            \`\`\`
-            EOL
+### Solution Code
+\`\`\`$lang
+$(cat "$file")
+\`\`\`
+EOL
           done
 
       - name: Commit generated pages
@@ -48,6 +47,6 @@ jobs:
           git config user.email "actions@github.com"
           git add _problems/
           git commit -m "Auto-generate problem pages" || echo "No changes"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:${GITHUB_REF}
+          git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
