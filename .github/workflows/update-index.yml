@@ -5,12 +5,7 @@ on:
     branches:
       - main            # change to "master" if that's your default
     paths:
-      - "arrays/**"
-      - "strings/**"
-      - "**/*.cpp"
-      - "**/*.c"
-      - "**/*.py"
-      - "**/*.java"
+      - "**"
 
 permissions:
   contents: write

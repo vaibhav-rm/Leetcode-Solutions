@@ -3,12 +3,7 @@ name: Generate Problem Pages
 on:
   push:
     paths:
-      - "arrays/**"
-      - "strings/**"
-      - "**.cpp"
-      - "**.c"
-      - "**.py"
-      - "**.java"
+      - "**"
 
 jobs:
   generate-pages:
