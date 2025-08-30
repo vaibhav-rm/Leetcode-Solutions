@@ -20,7 +20,23 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
 
 ## 📂 Categories
 
-### Arrays
+<ul>
+  {% assign array_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
+  {% for page in array_pages %}
+      <li>
+        <a href="{{ page.url | relative_url }}">
+          {% if page.title %}
+            {{ page.title }}
+          {% else %}
+            {{ page.name | remove: ".md" | replace: "-", " " | capitalize }}
+          {% endif %}
+        </a>
+      </li>
+  {% endfor %}
+</ul>
+
+
+<!-- ### Arrays
 <ul>
   {% assign array_pages = site.pages | where_exp: "p", "p.path contains '_problems/'" %}
   {% for page in array_pages %}
@@ -28,7 +44,7 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
         <a href="{{ page.url | relative_url }}">{{ page.title }}</a>
       </li>
   {% endfor %}
-</ul>
+</ul> -->
 
 <!-- ### Strings
 <ul>
