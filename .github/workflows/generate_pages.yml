@@ -1,36 +1,58 @@
-name: Update Problems Index
+name: Generate Problem Pages
 
 on:
   push:
+    branches:
+      - main            # change to "master" if that's your default
     paths:
       - "**"
-  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  generate-pages:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
-      - name: Generate Problems List
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Generate Markdown pages
         run: |
           mkdir -p _problems
-          echo "---" > _problems/index.md
-          echo "layout: page" >> _problems/index.md
-          echo "title: Problems" >> _problems/index.md
-          echo "---" >> _problems/index.md
-          echo "# Problems" >> _problems/index.md
-          echo "" >> _problems/index.md
-          for file in problems/*; do
-            fname=$(basename "$file")
-            echo "- [${fname}](/${file})" >> _problems/index.md
+          for file in arrays/* strings/*; do
+            [ -f "$file" ] || continue
+            filename=$(basename "$file")
+            title="${filename%.*}"
+            lang=$(echo $filename | sed -n 's/.*\.//p')
+
+            explanation="This is the explanation for **$title**. Add details here."
+
+            cat > "_problems/${title}.md" <<EOL
+            ---
+            layout: post
+            title: "$title"
+            ---
+
+            ## Problem: $title
+
+            $explanation
+
+            ### Solution Code
+            \`\`\`$lang
+            $(cat "$file")
+            \`\`\`
+            EOL
           done
 
-      - name: Commit and Push changes
+      - name: Commit generated pages
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add _problems/index.md
-          git commit -m "Update problems index" || echo "No changes to commit"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add _problems/
+          git commit -m "Auto-generate problem pages" || echo "No changes"
           git push
