@@ -44,6 +44,17 @@ Each solution is categorized by topic (e.g., Arrays, Strings) and linked directl
   {% endfor %}
 </ul>
 
+<ul>
+  {% assign files = site.static_files | where_exp:"f","f.path contains '/arrays/' or f.path contains '/strings/'" %}
+  {% for file in files %}
+    <li>
+      <a href="{{ file.path | relative_url }}">
+        {{ file.name }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
 ---
 
 ## 🔗 Quick Links

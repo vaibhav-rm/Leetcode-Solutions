@@ -1,0 +1,56 @@
+name: Generate Problem Pages
+
+on:
+  push:
+    paths:
+      - "arrays/**"
+      - "strings/**"
+      - "**.cpp"
+      - "**.c"
+      - "**.py"
+      - "**.java"
+
+jobs:
+  generate-pages:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Generate Markdown pages
+        run: |
+          mkdir -p _problems
+          for file in arrays/* strings/*; do
+            [ -f "$file" ] || continue
+            filename=$(basename "$file")
+            title="${filename%.*}"
+            lang=$(echo $filename | sed -n 's/.*\.//p')
+
+            # Placeholder explanation (can later be auto-generated)
+            explanation="This is the explanation for **$title**. Add details here."
+
+            cat > "_problems/${title}.md" <<EOL
+            ---
+            layout: post
+            title: "$title"
+            ---
+
+            ## Problem: $title
+
+            $explanation
+
+            ### Solution Code
+            \`\`\`$lang
+            $(cat "$file")
+            \`\`\`
+            EOL
+          done
+
+      - name: Commit generated pages
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add _problems/
+          git commit -m "Auto-generate problem pages" || echo "No changes"
+          git push
