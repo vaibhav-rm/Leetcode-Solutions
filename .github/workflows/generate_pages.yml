@@ -3,7 +3,7 @@ name: Update Problems Index
 on:
   push:
     paths:
-      - "problems/**"
+      - "**"
   workflow_dispatch:
 
 jobs:
